@@ -8,9 +8,28 @@ const AddPhoto = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const addPhoto = (e) => {
+  const addPhoto = async(e) => {
     e.preventDefault();
-    // TODO: answer here
+    const postFetch =await fetch("http://localhost:3001/photos", {
+    method: "POST",
+    headers: {
+    "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      imageUrl:imageUrl,
+      captions:captions,
+      createdAt:new Date().toISOString(),
+      updatedAt:new Date().toISOString(),
+      secret:secret
+    })
+    })
+    if (secret==="password") {
+      postFetch
+      navigate('/photos')
+    }
+    else{
+      navigate("*")
+    }
   };
 
   return (

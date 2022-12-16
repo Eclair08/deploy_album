@@ -10,18 +10,37 @@ const Photos = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const deletePhoto = (id) => {
+  const deletePhoto = async(id) => {
     // TODO: answer here
+    await fetch(`http://localhost:3001/photos/${id}`,
+    {
+      method: "DELETE",
+    })
+    setPhotos(prev => [...prev.filter(el => el.id !== id)])
   };
 
   useEffect(() => {
     setLoading(true);
-    // TODO: answer here
+    if (sort) {
+      fetch(`http://localhost:3001/photos?_sort=id&_order=${sort}`)
+      .then((response) => response.json())
+      .then((json) => {setPhotos(json)})
+      setLoading(false)
+    }
+    if(submited){
+      fetch(`http://localhost:3001/photos?q=${submited}`)
+      .then((response) => response.json())
+      .then((json) => {setPhotos(json)})
+      setLoading(false)
+    }
   }, [sort, submited]);
 
   useEffect(() => {
     setLoading(true);
-    // TODO: answer here
+    fetch("http://localhost:3001/photos")
+    .then((response) => response.json())
+    .then((json) => {setPhotos(json)})
+    setLoading(false)
   }, []);
 
   if (error) return <h1 style={{ width: "100%", textAlign: "center", marginTop: "20px" }} >Error!</h1>;

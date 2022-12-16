@@ -10,14 +10,30 @@ const EditPhoto = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const editPhoto = (e) => {
+  const editPhoto = async(e) => {
     e.preventDefault();
-    // TODO: answer here
+    const postFetch = await fetch(`http://localhost:3001/photos/${id}`, {
+    method: "PATCH",
+    headers: {
+    "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      imageUrl:imageUrl,
+      captions:captions,
+      updatedAt:new Date().toISOString(),
+    })
+    })
+    navigate('/photos')
   };
 
   useEffect(() => {
     setLoading(true);
-    // TODO: answer here
+    fetch(`http://localhost:3001/photos/${id}`)
+      .then((response) => response.json())
+      .then((json) => {
+        setImageUrl(json.imageUrl),
+        setCaptions(json.captions)})
+      setLoading(false)
   }, [id]);
 
   if (error) return <div>Error!</div>;
