@@ -12,7 +12,7 @@ const EditPhoto = () => {
 
   const editPhoto = async(e) => {
     e.preventDefault();
-    const postFetch = await fetch(`http://localhost:3001/photos/${id}`, {
+    await fetch(`http://localhost:3001/photos/${id}`, {
     method: "PATCH",
     headers: {
     "Content-Type": "application/json",
