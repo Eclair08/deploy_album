@@ -31,8 +31,10 @@ const EditPhoto = () => {
     fetch(`http://localhost:3001/photos/${id}`)
       .then((response) => response.json())
       .then((json) => {
-        setImageUrl(json.imageUrl),
-        setCaptions(json.captions)})
+        setImageUrl(json.imageUrl)})
+      .then((json) => {
+        setCaptions(json.captions)
+      })
       setLoading(false)
   }, [id]);
 
