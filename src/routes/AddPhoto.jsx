@@ -10,7 +10,8 @@ const AddPhoto = () => {
 
   const addPhoto = async(e) => {
     e.preventDefault();
-    const postFetch =await fetch("http://localhost:3001/photos", {
+    if (secret==="password") {
+      await fetch("http://localhost:3001/photos", {
     method: "POST",
     headers: {
     "Content-Type": "application/json",
@@ -23,8 +24,6 @@ const AddPhoto = () => {
       secret:secret
     })
     })
-    if (secret==="password") {
-      postFetch
       navigate('/photos')
     }
     else{
